@@ -151,6 +151,261 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-redux-saga与dva介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="dva与redux一些简单的介绍"><a href="#dva与redux一些简单的介绍" class="headerlink" title="dva与redux一些简单的介绍"></a>dva与redux一些简单的介绍</h2><h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><ol>
+<li>redux</li>
+<li>redux-saga</li>
+<li>dva</li>
+<li>fetch – 待补充</li>
+</ol>
+<h4 id="为什么使用redux"><a href="#为什么使用redux" class="headerlink" title="为什么使用redux"></a>为什么使用redux</h4><p>组件会发生三种通信。<code>react</code>只提供了一种通信手段：传参（可以理解成父子组件间的通信）</p>
+<blockquote>
+<p>向子组件发消息</p>
+<p>向父组件发消息</p>
+<p>向其他组件发消息</p>
+</blockquote>
+<ul>
+<li>在<code>React</code>中，<code>React</code>组件之间的关系为从属关系，将<code>React</code>组件的关系类比成父子关系。所以数据必须是由一方传到另一方，然而子组件的通信则必须通过父组件进行传递。随着项目的庞大与复杂，这种方式严重影响了代码的可读性与性能。</li>
+<li>当然<code>redux</code>使得状态变得可预测在一定程度上避免了<code>bug</code>滋生的温床。</li>
+</ul>
+<h4 id="redux的准则"><a href="#redux的准则" class="headerlink" title="redux的准则"></a>redux的准则</h4><ul>
+<li>单一数据源。<br>整个应用状态，都应该被存储在单一store的对象树中。</li>
+<li>只读状态。<br>唯一可以修改状态的方式，就是发送（dispatch）一个动作（Action），通俗来讲，就是说只有getter，没有setter。</li>
+<li>使用纯函数去修改状态。<br>戳这里<a href="http://www.tuicool.com/articles/FJ7zEb" target="_blank" rel="external">了解</a></li>
+</ul>
+<h4 id="redux的Action、Reducer和Store"><a href="#redux的Action、Reducer和Store" class="headerlink" title="redux的Action、Reducer和Store"></a>redux的Action、Reducer和Store</h4><ul>
+<li><code>Action</code>可以理解成用户的一个交互事件。</li>
+<li><code>Reducer</code>就是根据<code>Action</code>来进行更新<code>state</code>。</li>
+<li><code>Store</code>用于管理状态的对象，也可以理解为数据库。</li>
+</ul>
+<h4 id="redux数据流向"><a href="#redux数据流向" class="headerlink" title="redux数据流向"></a><code>redux</code>数据流向</h4><p><img src="https://zos.alipayobjects.com/rmsportal/SMWGwhBQlhPoUHXOlgrX.jpg" alt="数据流向"></p>
+<ul>
+<li><p>用户对页面操作就会产生一个<code>action</code>事件，然后通过<code>redux</code>的中间插件（redux-saga等）发送异步请求，然后根据返回的结果在<code>reducer</code>中进行判断操作等改变<code>state</code>。</p>
+<blockquote>
+<p>界面 =&gt; action =&gt; reducer =&gt; store =&gt; react =&gt; virtual dom =&gt; 界面</p>
+</blockquote>
+</li>
+<li><p><code>redux</code>将前端合理拆分成不同的层，有关展示为一层，有关事件为一层，有关请求与数据处理又是一层，区别于之前前端开发臃肿的代码结构层级，再加上es6、es7的语法使得前端工程化的形式更加趋向于java。</p>
+</li>
+<li>使用<code>redux</code>，设计更加重要尤其对于复杂庞大的系统，不同的文件，文件代码的功能等等。</li>
+</ul>
+<h4 id="React组件的写法"><a href="#React组件的写法" class="headerlink" title="React组件的写法"></a>React组件的写法</h4><p><img src="https://zos.alipayobjects.com/rmsportal/dotqDzVsWxvFrLwCsrhB.png" alt="React组件的写法"></p>
+<p><code>React Component</code>有3种定义方式，分别是<code>React.createClass</code>, <code>class</code>和<code>Stateless Functional Component</code>。推荐尽量使用最后一种，保持简洁和无状态。没有 this 作用域，用过的人都知道这种写法有多好。</p>
+<p>####redux-saga</p>
+<h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p><code>redux-saga</code>是<code>redux</code>的一个中间件，主要集中处理<code>react</code>架构中的异步处理工作，被定义为<code>generator</code>(ES6)的形式，采用监听的形式进行工作。</p>
+<h5 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h5><p>第二种是Facebook去年年底出的包管理工具（目前可能存在一些小bug），antd也有封装了<code>yarn</code>的<a href="https://ant.design/docs/react/use-with-create-react-app-cn" target="_blank" rel="external">脚手架工具</a></p>
+<blockquote>
+<p><code>npm install --save redux-saga</code></p>
+<p><code>yarn add redux-saga</code></p>
+</blockquote>
+<h5 id="方法（自行了解）"><a href="#方法（自行了解）" class="headerlink" title="方法（自行了解）"></a>方法（自行了解）</h5><ul>
+<li>put（产生一个 action）</li>
+<li>select（获取state值）</li>
+<li>call（阻塞地调用一个函数，个人理解：同步请求）</li>
+<li>fork（非阻塞地调用一个函数，个人理解：异步请求）</li>
+<li>take（监听且只监听一次 action）</li>
+<li>delay（延迟）</li>
+<li>race（只处理最先完成的任务）</li>
+</ul>
+<h5 id="redux-saga的一个事件触发到结束"><a href="#redux-saga的一个事件触发到结束" class="headerlink" title="redux-saga的一个事件触发到结束"></a>redux-saga的一个事件触发到结束</h5><p>1 组件 action，用户触发事件</p>
+<p><img src="https://zos.alipayobjects.com/rmsportal/QkbxMeBDYuNEzuttcBcA.png" alt="view"></p>
+<p>2 监听事件，发送请求</p>
+<p><img src="https://zos.alipayobjects.com/rmsportal/pmVYQahZHGyMIVHWBbMR.png" alt="effec"></p>
+<p>3 reducer</p>
+<p><img src="https://zos.alipayobjects.com/rmsportal/NnbsBMgAWBGAyeXKGlKP.png" alt="reducer"></p>
+<h4 id="dva"><a href="#dva" class="headerlink" title="dva"></a>dva</h4><p><code>dva</code>是对<code>redux-saga</code>的⼀层浅封装，对<code>redux</code>的概念做了简化。</p>
+<h5 id="使用dva"><a href="#使用dva" class="headerlink" title="使用dva"></a>使用dva</h5><blockquote>
+<p><code>tnpm install dva-cli -g</code></p>
+<p><code>dva new dva-quickstart</code></p>
+</blockquote>
+<h5 id="dva数据流向"><a href="#dva数据流向" class="headerlink" title="dva数据流向"></a>dva数据流向</h5><blockquote>
+<p>数据的改变发生通常是通过用户交互行为或者浏览器行为（如路由跳转等）触发的，当此类行为会改变数据的时候可以通过 dispatch 发起一个 action，如果是同步行为会直接通过 Reducers 改变 State ，如果是异步行为（副作用）会先触发 Effects 然后流向 Reducers 最终改变 State，所以在 dva 中，数据流向非常清晰简明，并且思路基本跟开源社区保持一致（也是来自于开源社区）。</p>
+</blockquote>
+<p><img src="https://zos.alipayobjects.com/rmsportal/VFzyCWWOKejLIMqmxwzY.png" alt="dva数据流向"></p>
+<h5 id="dva-API-具体"><a href="#dva-API-具体" class="headerlink" title="dva API 具体"></a>dva API <a href="https://github.com/dvajs/dva/blob/master/docs/API_zh-CN.md" target="_blank" rel="external">具体</a></h5><ul>
+<li>app = dva(opts)</li>
+<li>app.use</li>
+<li>app.model(model)</li>
+<li>app.router(({ history, app } =&gt; RouterConfig)</li>
+<li>app.start(selector?)</li>
+</ul>
+<h5 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h5><p><img src="https://zos.alipayobjects.com/rmsportal/vbiKOkUVvPbzNKyXGgFf.png" alt="项目结构"></p>
+<h5 id="model"><a href="#model" class="headerlink" title="model"></a>model</h5><p><code>dva</code>中的每个<code>model</code>，实际上都是普通的<code>JavaScript</code>对象，包含</p>
+<ol>
+<li><p>namespace：该<code>model</code>的名称</p>
+</li>
+<li><p>state：<code>state</code>状态的对象</p>
+</li>
+<li><p>subscriptions： 订阅</p>
+</li>
+</ol>
+<ul>
+<li><p>effects：异步请求，业务逻辑操作</p>
+</li>
+<li><p>reducers：处理同步操作，唯一的一个可以修改<code>state</code>的地方</p>
+</li>
+</ul>
+<p><img src="https://zos.alipayobjects.com/rmsportal/abBUPgwyCxRKaiykGzxZ.png" alt="model"> </p>
+<p><code>dva</code>将<code>store</code>、<code>reducer</code>、<code>effect</code>（请求中间插件）结合在<code>model</code>中，一方面减少了文件数量，另一方面减少了层级使得项目更清晰更容易维护。</p>
+<h5 id="组件的类别"><a href="#组件的类别" class="headerlink" title="组件的类别"></a>组件的类别</h5><ul>
+<li><code>components</code>主要存放项目的各个组件，纯展示的<code>UI</code>组件，没有逻辑与数据处理。</li>
+<li><code>routers</code>中存路由组件，连接路由，还有事件的<code>action</code>方法，属于最顶层组件。<br>以上组件、文件存放纯属个人喜好，可以根据不同的想法有所不同。</li>
+</ul>
+<h5 id="dva的一个事件触发到结束"><a href="#dva的一个事件触发到结束" class="headerlink" title="dva的一个事件触发到结束"></a>dva的一个事件触发到结束</h5><p>1 组件 action，用户触发事件</p>
+<p><img src="https://zos.alipayobjects.com/rmsportal/IFFIrTyQewrvwuUDrylg.png" alt="action"></p>
+<p>2 监听事件，发送请求</p>
+<p><img src="https://zos.alipayobjects.com/rmsportal/jpMJmZquloPThkqpqlhG.png" alt="effect"></p>
+<p>3 reducer</p>
+<p><img src="https://zos.alipayobjects.com/rmsportal/RezcRZBqzMwRtEOnpbXm.png" alt="reducer"></p>
+<ul>
+<li>从这里可以看出<code>dva</code>与<code>redux-saga</code>数据流非常相似。<code>dva</code>延续了<code>redux-saga</code>的<code>generator</code>的形式，使用异步的方式写同步代码。并且基本继承了<code>redux-saga</code>的属性和方法。</li>
+<li><code>dva</code>的每个函数都封装了<code>redux-saga</code>的<code>generator</code>方法。</li>
+<li><code>dva</code>每新增一个<code>model</code>都要在index.js文件中引入，每新增一个顶层组件都要在router.js中配路由</li>
+</ul>
+<h5 id="dva-loading"><a href="#dva-loading" class="headerlink" title="dva-loading"></a>dva-loading</h5><p>使用<code>dva-loading</code>后就不用在<code>effect</code>中重复地写<code>yield put({type: &#39;showloading&#39;,payload: { loading: true }});</code>。只要在页面中引入<code>loading</code>。</p>
+<p>1 项目中引入<code>dva-loading</code>，并加入index.js</p>
+<p><img src="https://zos.alipayobjects.com/rmsportal/AHPbZVJdIQrDsSWKQFYm.png" alt="first"></p>
+<p>2 把<code>loading</code>字段传到组件里</p>
+<p><img src="https://zos.alipayobjects.com/rmsportal/KhvyzSDllyHGYZnAvYll.png" alt="second"></p>
+<p><code>dva-loading</code>存在一定局限性，首先是<code>loading</code>效果是覆盖到整个页面，有些小组件需要单独的<code>loading</code>效果就无法满足，其次想给组件添加<code>dva-loading</code>，必须为其配上独有的<code>model</code>，这两者要一一对应。</p>
+<h4 id="router路由的优化"><a href="#router路由的优化" class="headerlink" title="router路由的优化"></a>router路由的优化</h4><ul>
+<li>由于<code>dva</code>最初教程例子的路由配置实例是引入组件，并给该组件配置路由信息。这样一来整个router.js的代码显得不够优雅，如图：</li>
+</ul>
+<p><img src="https://zos.alipayobjects.com/rmsportal/HahDXwcodzIlXpuAnint.png" alt="lizi"></p>
+<ul>
+<li><blockquote>
+<p>有不少业务场景下，我们可能会定义出很多个<code>model</code>，但并不需要在应用启动的时候就全部加载，比较典型的是各类管理控制台。如果每个功能页面是通过路由切换，互相之间没有关系的话，通常会使用<code>webpack</code>的<code>require.ensure</code>来做代码模块的懒加载。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://zos.alipayobjects.com/rmsportal/pDMgRSBRJEWPEJwwmhRB.png" alt=""></p>
+<h4 id="关于model"><a href="#关于model" class="headerlink" title="关于model"></a>关于model</h4><ul>
+<li><p><code>select</code>： 在<code>generator</code>函数中，modelA可以通过<code>select</code>的方法获取modelB的<code>state</code>状态值，这是非常好用的方法</p>
+<pre><code>const valueA = yield select(({ modelB }) =&gt; modelB.valueA);
+</code></pre></li>
+<li><p><code>put</code>： <code>put</code>的用法和组件中的<code>dispatch</code>方法一样，都是调用一个方法，区别是<code>put</code>是<code>generator</code>定义的方法。</p>
+<pre><code>yield put({ type: &apos;functionA&apos;, payload: { keyA: valueA } });
+
+dispatch({ type: &apos;functuinA&apos;, payload: { keyA: valueA } });
+</code></pre></li>
+<li><p><code>call</code>: 执行异步函数，通常用于发送请求，当然也可以同时发送两个请求</p>
+<pre><code>const { result1 } = yield call(service1, parse(params1));
+
+const [result1, result2]  = yield [
+  call(service1, param1),
+  call(service2, param2)
+]
+</code></pre></li>
+<li><p>take： 可以使用<code>take</code>操作来监听<code>action</code>。<code>take</code>也可以用来处理复杂业务下的操作，比如跨<code>model</code>的方法调用等等，很强大。</p>
+</li>
+</ul>
+<p>不一一赘述了，以上都是常用的方法，想了解更多详情<a href="https://lark.alipay.com/dva/docs/xrxdb1" target="_blank" rel="external">点我</a></p>
+<h3 id="fetch"><a href="#fetch" class="headerlink" title="fetch"></a>fetch</h3><ul>
+<li>用过<code>fetch</code>的人都不想用<code>ajax</code>，后者感觉有点<code>low</code>（嘿嘿嘿）。目前本人也在学习中，有些地方感觉和<code>promise</code>很相似。不支持IE。</li>
+<li><code>dva</code>、<code>antd</code>以及淘宝其他项目都推荐使用<code>fetch</code>处理异步请求，上手不难，想掌握好很难。</li>
+</ul>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p><code>antd</code>、<code>dva</code>以及其延伸的出来的工具方法真的非常强大，而且官网的例子很详细，多多使用，多多对比，多多思考就能掌握好。</p>
+<p>######欢迎补充，如果有写错的地方请指正，不明白的地方可以联系我</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/23/redux-saga与dva介绍/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-巧用Js方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="巧用Js方法"><a href="#巧用Js方法" class="headerlink" title="巧用Js方法"></a>巧用Js方法</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>ES7</code>即将来临，但是平常开发很多时候使用的还是<code>ES5</code>或者<code>ES3</code>的方法。本文主要总结了一些个人感觉非常常用和实用的方法。详情可以参考阮一峰的电子书籍。<a href="http://es6.ruanyifeng.com/#docs/destructuring" target="_blank" rel="external">我是传送门</a></p>
+<h3 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h3><p>我想这个平常用的肯定不会少，但还是想强调下，真的非常好用，体现在方便编码、代码优雅、代码可读性等等。</p>
+<ul>
+<li>可以设置默认值</li>
+<li>同时为多个变量或者常量赋值，包括对象和数组的赋值</li>
+<li>方便传参</li>
+</ul>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>个人感觉<code>ES6</code>对字符串最大的拓展就是给字符串定义了输出模板，非常实用方便优雅。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><ol>
+<li><code>from</code>： 将两类对象转为真正的数组：类似数组的对象<code>（array-like object）</code>和可遍历<code>（iterable）</code>的对象（包括<code>ES6</code>新增的数据结构<code>Set</code>和<code>Map</code>）。这个方法和<code>Set</code>配合起来，简直完美。</li>
+<li><code>includes</code>： 该方法属于<code>ES7</code>，在没有这个方法前，我们一直使用<code>indexOf</code>，而且功能更加强大，该方法也可用于字符串类型的数据。</li>
+<li><code>map</code>： 该方法属于<code>ES5</code>，遍历数组产生并一个新数组。配合<code>ES6</code>的箭头函数非常方便，是使用非常广泛方法。</li>
+<li><code>filter</code>： 该方法和<code>map</code>一样都属于<code>ES5</code>，遍历数组并产生一个新数组。但是与<code>map</code>不同的是该方法是返回符合条件的值生成一个新数组，用于筛选数据。也是非常实用的方法。</li>
+<li><code>some</code>： 与上两种方法类似，但是用于判断是否满足某个条件，只要数组中的一条数据满足条件就返回<code>true</code>。</li>
+<li><code>every</code>： 与<code>some</code>相对的，要所有值都满足才返回<code>true</code>。</li>
+</ol>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><ol>
+<li>属性简写： 方便开发，代码更加整洁。</li>
+<li><code>assign</code>： 用于合并对象，也是<code>ES6</code>中相当热门的方法，非常实用。不过属于浅拷贝，稍作不慎就出<code>bug</code>，需要三思而行。</li>
+<li><code>key</code>: 返回对象所有的属性值并且是数组类型。</li>
+<li><code>value</code>: 返回对象所有的属性对应的值。</li>
+<li><code>entries</code>: 相当于是<code>key</code>和<code>value</code>的结合，返回属性和值的数组，属于多维数组，感觉有点不好用。</li>
+</ol>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p><code>ES6</code>提供了新的数据结构<code>Set</code>。它类似于数组，但是成员的值都是唯一的，没有重复的值。可以用来数组去重，不用写一堆方法实现去重（复杂的可能还是需要写方法），非常实用和强大，可以多用用。</p>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="~~运算符"></a>~~运算符</h3><p>~在js中有按位取反的作用，~~就是取反两次。可以用于取消小数部分，类似<code>parseInt</code>。</p>
+<pre><code>let a = 1.23;
+let b = -1.23;
+
+console.log(~~a); // 1
+console.log(~~b); // -1
+</code></pre><h3 id="运算符-1"><a href="#运算符-1" class="headerlink" title="||运算符"></a>||运算符</h3><p>给变量设置默认值。解构赋值也是设置默认值，不过一般是给函数接收的参数设置。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/05/23/巧用Js方法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-关于es6编码规范" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
