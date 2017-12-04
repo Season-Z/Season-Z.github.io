@@ -328,31 +328,10 @@
 <li>同时为多个变量或者常量赋值，包括对象和数组的赋值</li>
 <li>方便传参</li>
 </ul>
-<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>个人感觉<code>ES6</code>对字符串最大的拓展就是给字符串定义了输出模板，非常实用方便优雅。</p>
-<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><ol>
-<li><code>from</code>： 将两类对象转为真正的数组：类似数组的对象<code>（array-like object）</code>和可遍历<code>（iterable）</code>的对象（包括<code>ES6</code>新增的数据结构<code>Set</code>和<code>Map</code>）。这个方法和<code>Set</code>配合起来，简直完美。</li>
-<li><code>includes</code>： 该方法属于<code>ES7</code>，在没有这个方法前，我们一直使用<code>indexOf</code>，而且功能更加强大，该方法也可用于字符串类型的数据。</li>
-<li><code>map</code>： 该方法属于<code>ES5</code>，遍历数组产生并一个新数组。配合<code>ES6</code>的箭头函数非常方便，是使用非常广泛方法。</li>
-<li><code>filter</code>： 该方法和<code>map</code>一样都属于<code>ES5</code>，遍历数组并产生一个新数组。但是与<code>map</code>不同的是该方法是返回符合条件的值生成一个新数组，用于筛选数据。也是非常实用的方法。</li>
-<li><code>some</code>： 与上两种方法类似，但是用于判断是否满足某个条件，只要数组中的一条数据满足条件就返回<code>true</code>。</li>
-<li><code>every</code>： 与<code>some</code>相对的，要所有值都满足才返回<code>true</code>。</li>
-</ol>
-<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><ol>
-<li>属性简写： 方便开发，代码更加整洁。</li>
-<li><code>assign</code>： 用于合并对象，也是<code>ES6</code>中相当热门的方法，非常实用。不过属于浅拷贝，稍作不慎就出<code>bug</code>，需要三思而行。</li>
-<li><code>key</code>: 返回对象所有的属性值并且是数组类型。</li>
-<li><code>value</code>: 返回对象所有的属性对应的值。</li>
-<li><code>entries</code>: 相当于是<code>key</code>和<code>value</code>的结合，返回属性和值的数组，属于多维数组，感觉有点不好用。</li>
-</ol>
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p><code>ES6</code>提供了新的数据结构<code>Set</code>。它类似于数组，但是成员的值都是唯一的，没有重复的值。可以用来数组去重，不用写一堆方法实现去重（复杂的可能还是需要写方法），非常实用和强大，可以多用用。</p>
-<h3 id="运算符"><a href="#运算符" class="headerlink" title="~~运算符"></a>~~运算符</h3><p>~在js中有按位取反的作用，~~就是取反两次。可以用于取消小数部分，类似<code>parseInt</code>。</p>
-<pre><code>let a = 1.23;
-let b = -1.23;
-
-console.log(~~a); // 1
-console.log(~~b); // -1
-</code></pre><h3 id="运算符-1"><a href="#运算符-1" class="headerlink" title="||运算符"></a>||运算符</h3><p>给变量设置默认值。解构赋值也是设置默认值，不过一般是给函数接收的参数设置。</p>
-
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>个人感觉<code>ES6</code>对字符串最大的拓展就是给字符串定义了输出模板，非常实用方便优雅。<br>
+        
+          <a class="article-more-a" href="/2017/05/23/巧用Js方法/#more">more >></a>
+        
       
 
       
