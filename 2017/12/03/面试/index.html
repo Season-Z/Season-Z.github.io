@@ -14,7 +14,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/12/03/面试/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="面试 常见的浏览器内核有哪些？ 123Trident内核：IE,MaxThon,TT,The World,360,搜狗浏览器等。[又称MSHTML]Gecko内核：Netscape6及以上版本，FF,MozillaSuite/SeaMonkey等Webkit内核：Safari,Chrome,Opera等。   [ Chrome的：Blink（WebKit的分支）]  简述一下你对HTML语义化的理">
-<meta property="og:updated_time" content="2017-12-04T12:26:14.304Z">
+<meta property="og:updated_time" content="2017-12-07T11:58:38.497Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="面试 常见的浏览器内核有哪些？ 123Trident内核：IE,MaxThon,TT,The World,360,搜狗浏览器等。[又称MSHTML]Gecko内核：Netscape6及以上版本，FF,MozillaSuite/SeaMonkey等Webkit内核：Safari,Chrome,Opera等。   [ Chrome的：Blink（WebKit的分支）]  简述一下你对HTML语义化的理">
@@ -295,6 +295,9 @@
 <li>通过js来获取窗口高度并给内容设置高度</li>
 <li>flex布局</li>
 </ol>
+<h4 id="float与absolute"><a href="#float与absolute" class="headerlink" title="float与absolute"></a>float与absolute</h4><p>给行内元素添加float与absolute自动添加display: block属性。</p>
+<p>float是欺骗父元素，让其父元素误以为其高度塌陷了，但float元素本身仍处于文档流中，文字会环绕着float元素，不会被遮蔽。</p>
+<p>但absolute其实已经不能算是欺骗父元素了，而是出现了<strong>层级</strong>关系。</p>
 
       
 
@@ -387,6 +390,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/12/21/ajax跨域，这应该是最全的解决方案了/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2017/08/20/react/" id="article-nav-older" class="article-nav-link-wrap">
